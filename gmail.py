@@ -1,14 +1,15 @@
 from __future__ import print_function
 import pickle
 import os.path
-from sender import GmailSender
+from collections import OrderedDict
+from operator import itemgetter
+
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient import errors
-from collections import OrderedDict
-from operator import itemgetter
 
+from sender import GmailSender
 # 2 effective ways to give your program access:
 # 1. Easiest but generates an app called Quickstart: https://developers.google.com/gmail/api/quickstart/python
 # 1. Create a project by going to:
