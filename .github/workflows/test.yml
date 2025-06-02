@@ -15,6 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -36,7 +37,10 @@ jobs:
         
     - name: Install dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-root
+      run: |
+        poetry install --no-interaction
+        poetry install --no-interaction --no-root
+        
     - name: Run black
       run: |
         poetry run black --check --verbose $(git ls-files '*.py')
