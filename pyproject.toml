@@ -1,33 +1,41 @@
-[tool.poetry]
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
 name = "gmail-stats"
 version = "0.1.0"
-description = "A tool to analyze Gmail statistics"
-authors = ["Your Name <your.email@example.com>"]
+description = "A tool to analyze Gmail threads and messages"
 readme = "README.md"
-packages = [
-    { include = "gmail_stats" }
+authors = [
+    { name = "Your Name", email = "your.email@example.com" }
+]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "click",
+    "rich",
+    "limits>=5.2.0",
+    "google-api-python-client",
+    "google-auth-httplib2",
+    "google-auth-oauthlib"
 ]
 
+[project.scripts]
+gmail-stats = "gmail_stats:main"
+
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.10,<4.0"
+click = "*"
+rich = "*"
+limits = "^5.2.0"
 google-api-python-client = "*"
 google-auth-httplib2 = "*"
 google-auth-oauthlib = "*"
-click = "^8.1.7"
-rich = "^13.7.0"
-limits = "^5.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
 pytest-cov = "^4.1.0"
 pytest-mock = "^3.12.0"
-
-[tool.poetry.scripts]
-gmail-stats = "gmail_stats.cli:main"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
