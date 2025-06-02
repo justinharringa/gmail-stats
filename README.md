@@ -15,6 +15,7 @@ A command-line tool to analyze your Gmail inbox, providing insights about your e
 - Parallel processing for faster data retrieval
 - Data compression for efficient storage
 - Batch processing of email threads
+- Group senders by email address
 
 ## Installation
 
@@ -32,9 +33,29 @@ poetry install
 3. Set up Google API credentials:
    - Go to the [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select an existing one
-   - Enable the Gmail API for your project
-   - Create OAuth 2.0 credentials (Desktop application)
-   - Download the credentials and save them as `.env/credentials.json`
+   - Enable the Gmail API for your project:
+     - Search for "Gmail API" in the API Library
+     - Click "Enable"
+   - Configure the OAuth consent screen:
+     - Go to "OAuth consent screen" in the left menu
+     - Choose "External" user type
+     - Fill in the required information (app name, user support email, developer contact)
+     - Add the Gmail API scope: `https://www.googleapis.com/auth/gmail.readonly`
+     - Add test users if needed
+   - Create OAuth 2.0 credentials:
+     - Go to "Credentials" in the left menu
+     - Click "Create Credentials" and select "OAuth client ID"
+     - Choose "Desktop application" as the application type
+     - Download the credentials and save them as `.env/credentials.json`
+   - For more detailed instructions, see:
+     - [Google's Quickstart Guide](https://developers.google.com/gmail/api/quickstart/python)
+     - [Medium Article on Gmail API Setup](https://medium.com/lyfepedia/sending-emails-with-gmail-api-and-python-49474e32c81f)
+
+4. Create the `.env` directory and place your credentials:
+```bash
+mkdir -p .env
+# Move your downloaded credentials.json to .env/credentials.json
+```
 
 ## Usage
 
@@ -51,6 +72,9 @@ poetry run gmail-stats list --sort-by threads
 
 # Sort by unread threads
 poetry run gmail-stats list --sort-by unread_threads
+
+# Group senders by email address
+poetry run gmail-stats list --group-by-email
 ```
 
 ### Show Sender Details
@@ -58,7 +82,11 @@ poetry run gmail-stats list --sort-by unread_threads
 View detailed information about a specific sender:
 
 ```bash
+# Show details for a specific sender
 poetry run gmail-stats show "example@email.com"
+
+# Show details with email grouping
+poetry run gmail-stats show "example@email.com" --group-by-email
 ```
 
 This will show:
@@ -77,13 +105,17 @@ poetry run gmail-stats interactive
 
 # Start with a specific sort order
 poetry run gmail-stats interactive --sort-by threads
+
+# Start with email grouping enabled
+poetry run gmail-stats interactive --group-by-email
 ```
 
 In interactive mode, you can:
 1. View the sender list
 2. Enter a sender's email to see their details
 3. Press 's' to change the sort criteria
-4. Press 'q' to quit
+4. Press 'g' to toggle email grouping
+5. Press 'q' to quit
 
 ## Data Storage
 
