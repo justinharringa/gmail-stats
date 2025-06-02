@@ -45,12 +45,13 @@ jobs:
       run: |
         poetry run black --check --verbose $(git ls-files '*.py')
         
-    - name: Run pytest
+    - name: Run pytest with coverage
       run: |
-        poetry run pytest --cov=gmail_stats --cov-report=xml
+        poetry run pytest --cov=gmail_stats --cov-report=term-missing --cov-report=html
         
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
       with:
-        file: ./coverage.xml
-        fail_ci_if_error: true 
+        name: coverage-report-${{ matrix.python-version }}
+        path: htmlcov/
+        retention-days: 14
