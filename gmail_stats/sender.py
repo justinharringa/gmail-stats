@@ -4,15 +4,15 @@ from .thread import GmailThread
 
 class GmailSender:
     """Represents a Gmail sender with their associated email threads.
-    
+
     Attributes:
         sender: The sender's email address or name
         threads: List of GmailThread objects associated with this sender
     """
-    
+
     def __init__(self, sender: str):
         """Initialize a new GmailSender.
-        
+
         Args:
             sender: The sender's email address or name
         """
@@ -37,7 +37,7 @@ class GmailSender:
 
     def num_threads(self) -> int:
         """Get the number of threads associated with this sender.
-        
+
         Returns:
             The number of threads
         """
@@ -45,16 +45,16 @@ class GmailSender:
 
     def get_email(self) -> str:
         """Extract the email address from the sender string.
-        
+
         If the sender string is in the format "Name <email@example.com>",
         extracts just the email address. Otherwise returns the original string.
-        
+
         Returns:
             The sender's email address
         """
-        if self.sender and '<' not in self.sender:
+        if self.sender and "<" not in self.sender:
             return self.sender
-        return self.sender.split('<')[1].split('>')[0]
+        return self.sender.split("<")[1].split(">")[0]
 
     def __str__(self) -> str:
         """String representation of the sender."""
